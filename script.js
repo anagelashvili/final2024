@@ -78,3 +78,72 @@ axios.get('https://jsonplaceholder.typicode.com/posts')
     });
   })
   .catch(error => console.error('Error fetching data:', error));
+document.getElementById('myForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const agree = document.getElementById('agree').checked;
+    if (!username || !email || !password || !agree) {
+        alert('Please fill all fields and agree to the terms.');
+        return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('Invalid email address.');
+        return;
+    }
+
+    alert('Form submitted successfully!');
+});
+
+function togglePassword() {
+    const passwordField = document.getElementById('password');
+    const type = passwordField.type === 'password' ? 'text' : 'password';
+    passwordField.type = type;
+}
+
+async function fetchData() {
+    try {
+        const response = await fetch('https://api.example.com/data');
+        const data = await response.json();
+        document.getElementById('apiData').innerText = JSON.stringify(data, null, 2);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', fetchData);
+
+document.getElementById('filterInput').addEventListener('input', function() {
+    const filterText = this.value.toLowerCase();
+    const products = document.querySelectorAll('.pro');
+    products.forEach(product => {
+        const productName = product.querySelector('.des h5').innerText.toLowerCase();
+        product.style.display = productName.includes(filterText) ? '' : 'none';
+    });
+});
+
+document.querySelectorAll('.accordion').forEach(button => {
+    button.addEventListener('click', function() {
+        this.classList.toggle('active');
+        const panel = this.nextElementSibling;
+        panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+    });
+});
+
+const scrollToTopButton = document.querySelector('.scroll-to-top');
+scrollToTopButton.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+window.addEventListener('scroll', () => {
+    scrollToTopButton.style.display = window.scrollY > 300 ? 'block' : 'none';
+});
+
+import _ from 'lodash';
+
+document.addEventListener('DOMContentLoaded', () => {
+    console.log(_.join(['Page', 'Loaded'], ' '));
+});
